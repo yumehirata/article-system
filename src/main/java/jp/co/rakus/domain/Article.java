@@ -1,5 +1,7 @@
 package jp.co.rakus.domain;
 
+import java.util.List;
+
 /**
  * 掲示板を設定するドメイン.
  * 
@@ -7,12 +9,19 @@ package jp.co.rakus.domain;
  *
  */
 public class Article {
-	/** id */
+	/** 投稿ID */
 	private Integer id;
-	/** ユーザーの名前 */
+	/** 名前 */
 	private String name;
-	/** コメント */
-	private String comment;
+	/** コンテント */
+	private String content;
+	/** コメントのリスト */
+	private List<Comment> commentList;
+
+	@Override
+	public String toString() {
+		return "Article [id=" + id + ", name=" + name + ", content=" + content + ", commentList=" + commentList + "]";
+	}
 
 	public Integer getId() {
 		return id;
@@ -30,28 +39,20 @@ public class Article {
 		this.name = name;
 	}
 
-	public String getComment() {
-		return comment;
+	public String getContent() {
+		return content;
 	}
 
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
-	public String getCommentList() {
+	public List<Comment> getCommentList() {
 		return commentList;
 	}
 
-	public void setCommentList(String commentList) {
+	public void setCommentList(List<Comment> commentList) {
 		this.commentList = commentList;
 	}
-
-	@Override
-	public String toString() {
-		return "Article [id=" + id + ", name=" + name + ", comment=" + comment + ", commentList=" + commentList + "]";
-	}
-
-	/** コメントのリスト */
-	private String commentList;
 
 }
