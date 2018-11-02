@@ -17,7 +17,7 @@ public class CommentForm {
 	public Integer getIntegerArticleId() {
 		return Integer.parseInt(articleId);
 	}
-	
+
 	public String getArticleId() {
 		return articleId;
 	}

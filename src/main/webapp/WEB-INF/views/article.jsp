@@ -21,11 +21,6 @@
 			投稿ID：<c:out value="${article.id}"/><br>
 			投稿者名：<c:out value="${article.name}"/><br>
 			投稿内容：<c:out value="${article.content}"/><br>
-			<!--			
-			<form:form modelAttribute="articleForm" action="${pageContext.request.contextPath}/article/deleteArticle">
-			<input type="submit" value="記事削除">
-			</form:form>
-			-->
 			<form action="${pageContext.request.contextPath}/article/deleteArticle" method="post">
 				<input type="hidden" name="id" value="${article.id}">
 				<input type="submit" value="記事削除">
@@ -41,6 +36,7 @@
 			</form>
 		<br>
 		</c:forEach>
+		
 	<form:form modelAttribute="commentForm" action="${pageContext.request.contextPath}/article/insertComment">
 		名前：<form:input path="name"/><br>
 		コメント：<form:textarea path="content"/><br>
@@ -48,7 +44,5 @@
 		<input type="submit" value="コメント投稿">
 	</form:form>
 </c:forEach>
-
-
 </body>
 </html>
