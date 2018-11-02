@@ -1,5 +1,7 @@
 package jp.co.rakus.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -28,5 +30,17 @@ public class ArticleRepository {
 		
 		return article;
 	};
+	
+	/**
+	 * articlesテーブルの全件検索.
+	 * 
+	 * @return	検索してきた記事のリストを返す
+	 */
+	public List<Article> findAll(){
+		String sql = "SELECT id,name,content FROM articles ORDER BY id";
+		
+		List<Article> articleList = template.query(sql, ARTICLE_ROW_MAPPER);
+		return articleList;
+	}
 
 }

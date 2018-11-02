@@ -33,8 +33,14 @@ public class CommentRepository {
 		return comment;
 	};
 	
-	public List<Comment> findByArticle(int articleId) {
-		String sql ="SELECT id, name, content, article_id FROM comments WHERE article_id=:article_id";
+	/**
+	 * 投稿IDによる指定検索.
+	 * 
+	 * @param articleId	検索キーとなる記事ID
+	 * @return	検索してきたコメントリストを返す
+	 */
+	public List<Comment> findByArticleId(int articleId) {
+		String sql ="SELECT id, name, content, article_id FROM comments WHERE article_id=:article_id ORDER BY id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("article_id", articleId);
 		
 		List<Comment> commentList = template.query(sql, param,COMMENT_ROW_MAPPER);
