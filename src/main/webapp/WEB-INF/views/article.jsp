@@ -11,7 +11,9 @@
 <h2>掲示板アプリケーション</h2>
 
 <form:form modelAttribute="articleForm" action="${pageContext.request.contextPath}/article/insertArticle">
+	<form:errors path="name" cssStyle="color:red" element="div"/>
 	投稿者名<form:input path="name"/><br>
+	<form:errors path="content" cssStyle="color:red" element="div"/>
 	投稿内容<form:textarea path="content"/><br>
 	<input type="submit" value="記事投稿">
 </form:form>
@@ -38,7 +40,13 @@
 		</c:forEach>
 		
 	<form:form modelAttribute="commentForm" action="${pageContext.request.contextPath}/article/insertComment">
+		<c:if test="commentForm.articleId == article.id">
+		<form:errors path="name" cssStyle="color:red" element="div"/>
+		</c:if>
 		名前：<form:input path="name"/><br>
+				<c:if test="commentForm.articleId == article.id">
+		<form:errors path="content" cssStyle="color:red" element="div"/>
+				</c:if>
 		コメント：<form:textarea path="content"/><br>
 		<form:hidden path="articleId" value="${article.id}"/>
 		<input type="submit" value="コメント投稿">

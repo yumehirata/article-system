@@ -1,5 +1,8 @@
 package jp.co.rakus.form;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 /**
  * 記事に関するリクエストパラメータを受け取るフォーム.
  * 
@@ -8,8 +11,11 @@ package jp.co.rakus.form;
  */
 public class ArticleForm {
 	/** 名前 */
+	@NotBlank(message="名前を入力してください")
+	@Size(max=50, message="名前は50文字以内で入力してください")
 	private String name;
 	/** コンテント */
+	@NotBlank(message="内容を入力してください")
 	private String content;
 
 	@Override

@@ -6,6 +6,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -32,12 +34,12 @@ public class ArticleController {
 	private CommentRepository commentRepository;
 
 	@ModelAttribute
-	public ArticleForm setUpForm1() {
+	public ArticleForm setUpArticleForm() {
 		return new ArticleForm();
 	}
 
 	@ModelAttribute
-	public CommentForm setUpForm2() {
+	public CommentForm setUpCommentForm() {
 		return new CommentForm();
 	}
 
@@ -49,10 +51,9 @@ public class ArticleController {
 	@RequestMapping("/")
 	public String index(Model model) {
 		List<Article> articleList = articleRepository.findAll();
-		Integer articleId;
 		
 		for (Article article : articleList) {
-			articleId = article.getId();
+			Integer articleId = article.getId();
 			List<Comment> commentList = commentRepository.findByArticleId(articleId);
 			article.setCommentList(commentList);
 		}
@@ -69,7 +70,11 @@ public class ArticleController {
 	 * @return 表示画面
 	 */
 	@RequestMapping("/insertArticle")
-	public String insertArticle(ArticleForm form) {
+	public String insertArticle(@Validated ArticleForm form,BindingResult result,Model model) {
+		if(result.hasErrors()) {
+			return index(model);
+		}
+		
 		Article article = new Article();
 		BeanUtils.copyProperties(form, article);
 		articleRepository.insertArticle(article);
@@ -85,7 +90,11 @@ public class ArticleController {
 	 * @return 表示画面
 	 */
 	@RequestMapping("/insertComment")
-	public String insertComment(CommentForm form) {
+	public String insertComment(@Validated CommentForm form,BindingResult result,Model model) {
+		if(result.hasErrors()) {
+			return index(model);
+		}
+		
 		Comment comment = new Comment();
 		BeanUtils.copyProperties(form, comment);
 		comment.setArticleId(form.getIntegerArticleId());
@@ -103,7 +112,8 @@ public class ArticleController {
 	 */
 	@RequestMapping("/deleteArticle")
 	public String deleteArticle(Integer id) {
-		articleRepository.deleteArticle(id);
+		commentRepository.deleteByArticleId(id);
+		articleRepository.deleteById(id);
 
 		return "redirect:/article/";
 	}
@@ -117,7 +127,7 @@ public class ArticleController {
 	 */
 	@RequestMapping("/deleteComment")
 	public String deleteComment(Integer id) {
-		commentRepository.deleteComment(id);
+		commentRepository.deleteById(id);
 
 		return "redirect:/article/";
 	}
