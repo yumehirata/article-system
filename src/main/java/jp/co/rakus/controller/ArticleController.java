@@ -98,9 +98,9 @@ public class ArticleController {
 	}
 	
 	@RequestMapping("/deleteComment")
-	public String deleteComment(String id) {
-		Integer deleteId = Integer.parseInt(id);
-		commentRepository.deleteComment(deleteId);
+	public String deleteComment(Integer id) {
+//		Integer deleteId = Integer.parseInt(id);
+		commentRepository.deleteComment(id);
 		
 		return "redirect:/article/";
 	}

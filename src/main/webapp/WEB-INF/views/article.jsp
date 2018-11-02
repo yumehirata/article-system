@@ -18,20 +18,27 @@
 
 <c:forEach var="article" items="${articleList}">
 	<hr>
-		<form:form modelAttribute="articleForm" action="${pageContext.request.contextPath}/artricle/deleteArticle">
 			投稿ID：<c:out value="${article.id}"/><br>
 			投稿者名：<c:out value="${article.name}"/><br>
 			投稿内容：<c:out value="${article.content}"/><br>
+			<!--			
+			<form:form modelAttribute="articleForm" action="${pageContext.request.contextPath}/article/deleteArticle">
 			<input type="submit" value="記事削除">
-		</form:form>
+			</form:form>
+			-->
+			<form action="${pageContext.request.contextPath}/article/deleteArticle" method="post">
+				<input type="hidden" name="id" value="${article.id}">
+				<input type="submit" value="記事削除">
+			</form>
 	<br>
 		<c:forEach var="comment" items="${article.commentList}">
-			<form:form modelAttribute="commentForm" action="${pageContext.request.contextPath}/article/deleteComment">
-				コメントID：<c:out value="${comment.id}"/><br>
-				コメント者名：<c:out value="${comment.name}"/><br>
-				コメント内容：<c:out value="${comment.content}"/><br>
+			コメントID：<c:out value="${comment.id}"/><br>
+			コメント者名：<c:out value="${comment.name}"/><br>
+			コメント内容：<c:out value="${comment.content}"/><br>
+			<form action="${pageContext.request.contextPath}/article/deleteComment" method="post">
+				<input type="hidden" name="id" value="${comment.id}">
 				<input type="submit" value="コメント削除">
-			</form:form>
+			</form>
 		<br>
 		</c:forEach>
 	<form:form modelAttribute="commentForm" action="${pageContext.request.contextPath}/article/insertComment">
