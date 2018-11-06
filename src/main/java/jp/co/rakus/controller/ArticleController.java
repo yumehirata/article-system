@@ -50,13 +50,18 @@ public class ArticleController {
 	 */
 	@RequestMapping("/")
 	public String index(Model model) {
-		List<Article> articleList = articleRepository.findAll();
 		
-		for (Article article : articleList) {
-			Integer articleId = article.getId();
-			List<Comment> commentList = commentRepository.findByArticleId(articleId);
-			article.setCommentList(commentList);
-		}
+		/** 初級課題用 */
+//		List<Article> articleList = articleRepository.findAll();
+//		
+//		for (Article article : articleList) {
+//			Integer articleId = article.getId();
+//			List<Comment> commentList = commentRepository.findByArticleId(articleId);
+//			article.setCommentList(commentList);
+//		}
+		
+		List<Article> articleList = articleRepository.findAllOnce();
+		
 		model.addAttribute("articleList", articleList);
 
 		return "article";
@@ -112,8 +117,12 @@ public class ArticleController {
 	 */
 	@RequestMapping("/deleteArticle")
 	public String deleteArticle(Integer id) {
-		commentRepository.deleteByArticleId(id);
-		articleRepository.deleteById(id);
+
+		/** 初級課題用 */
+//		commentRepository.deleteByArticleId(id);
+//		articleRepository.deleteById(id);	
+
+		articleRepository.deleteOnceById(id);
 
 		return "redirect:/article/";
 	}

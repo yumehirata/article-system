@@ -40,13 +40,13 @@
 		</c:forEach>
 		
 	<form:form modelAttribute="commentForm" action="${pageContext.request.contextPath}/article/insertComment">
-		<c:if test="commentForm.articleId == article.id">
+		<c:if test="${commentForm.articleId == article.id}">
 		<form:errors path="name" cssStyle="color:red" element="div"/>
 		</c:if>
 		名前：<form:input path="name"/><br>
-				<c:if test="commentForm.articleId == article.id">
+		<c:if test="${commentForm.articleId == article.id}">
 		<form:errors path="content" cssStyle="color:red" element="div"/>
-				</c:if>
+		</c:if>
 		コメント：<form:textarea path="content"/><br>
 		<form:hidden path="articleId" value="${article.id}"/>
 		<input type="submit" value="コメント投稿">
